@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Thống kê nhân viên</title>
+    <style>
+        :root { font-family: system-ui, sans-serif; color: #172033; background: #f3f6fb; }
+        body { max-width: 900px; margin: 3rem auto; padding: 0 1.25rem; }
+        h1 { margin-bottom: .4rem; }
+        .summary { display: inline-block; margin: 1.5rem 0; padding: 1rem 1.5rem; border-radius: 12px; background: #fff; box-shadow: 0 2px 12px #17203312; }
+        .summary strong { display: block; font-size: 2rem; color: #2457c5; }
+        table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 12px #17203312; }
+        th, td { padding: .9rem 1rem; text-align: left; border-bottom: 1px solid #e8edf5; }
+        th { background: #eaf0fc; }
+        tr:last-child td { border-bottom: 0; }
+        .empty { color: #68748a; }
+        a { color: #2457c5; }
+    </style>
+</head>
+<body>
+<main>
+    <h1>Thống kê nhân viên</h1>
+    <p>Báo cáo tổng quan nhân viên theo phòng ban.</p>
+
+    <section class="summary" aria-label="Tổng số nhân viên">
+        <span>Tổng số nhân viên</span>
+        <strong th:text="${totalEmployees}">0</strong>
+    </section>
+
+    <h2>Số lượng theo phòng ban</h2>
+    <table>
+        <thead><tr><th>Phòng ban</th><th>Số nhân viên</th></tr></thead>
+        <tbody>
+        <tr th:each="item : ${departmentStatistics}">
+            <td th:text="${item.department}">Department</td>
+            <td th:text="${item.employeeCount}">0</td>
+        </tr>
+        <tr th:if="${#lists.isEmpty(departmentStatistics)}">
+            <td class="empty" colspan="2">Chưa có dữ liệu nhân viên.</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <p>REST API: <a href="/api/statistics/employee-count">tổng số nhân viên</a> ·
+        <a href="/api/statistics/employees-by-department">theo phòng ban</a></p>
+</main>
+</body>
+</html>
